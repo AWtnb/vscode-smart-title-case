@@ -3,6 +3,9 @@
   "displayName": "smart-title-case",
   "description": "convert selected text to title-case (with option to specify words to lowercase)",
   "icon": "images/logo.png",
+  "repository": {
+    "url": "https://github.com/AWtnb/vscode-smart-title-case"
+  },
   "publisher": "awtnb",
   "version": "0.0.1",
   "engines": {
