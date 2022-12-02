@@ -7,13 +7,14 @@
     "url": "https://github.com/AWtnb/vscode-smart-title-case"
   },
   "publisher": "awtnb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.73.0"
   },
   "categories": [
     "Other"
-  ],"activationEvents": [
+  ],
+  "activationEvents": [
     "onLanguage:plaintext",
     "onLanguage:markdown",
     "onCommand:smartTitleCase.enable"
@@ -34,7 +35,7 @@
       "title": "smartTitleCase",
       "properties": {
         "smartTitleCase.exception": {
-          "type":"string",
+          "type": "string",
           "default": "A,About,Aboard,Above,Across,After,Against,Along,Alongside,Am,Amid,Among,An,And,Anti,Are,Around,As,At,Bar,Before,Behind,Below,Beneath,Beside,Besides,Between,Beyond,But,By,Considering,Despite,Down,During,Except,For,From,In,Inside,Into,Is,Less,Like,Minus,Near,Notwithstanding,Of,Off,On,Onto,Or,Opposite,Out,Outside,Over,Past,Pending,Per,Plus,Round,Since,Than,The,Through,Throughout,Till,To,Toward,Under,Underneath,Unless,Unlike,Until,Up,Versus,Via,Vice,With,Within,Without",
           "description": "specify words to be all lowercase, separated by commas."
         }
