@@ -1,0 +1,60 @@
+{
+  "name": "smart-title-case",
+  "displayName": "smart-title-case",
+  "description": "convert selected text to title-case (with option to specify words to lowercase)",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Other"
+  ],"activationEvents": [
+    "onLanguage:plaintext",
+    "onLanguage:markdown",
+    "onCommand:smartTitleCase.enable"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "smartTitleCase.apply",
+        "title": "smart-title-case: apply to selection"
+      },
+      {
+        "command": "smartTitleCase.capitalizeOnlyFirstChar",
+        "title": "smart-title-case: capitalize only first character"
+      }
+    ],
+    "configuration": {
+      "title": "smartTitleCase",
+      "properties": {
+        "smartTitleCase.exception": {
+          "type":"string",
+          "default": "A,About,Aboard,Above,Across,After,Against,Along,Alongside,Am,Amid,Among,An,And,Anti,Are,Around,As,At,Bar,Before,Behind,Below,Beneath,Beside,Besides,Between,Beyond,But,By,Considering,Despite,Down,During,Except,For,From,In,Inside,Into,Is,Less,Like,Minus,Near,Notwithstanding,Of,Off,On,Onto,Or,Opposite,Out,Outside,Over,Past,Pending,Per,Plus,Round,Since,Than,The,Through,Throughout,Till,To,Toward,Under,Underneath,Unless,Unlike,Until,Up,Versus,Via,Vice,With,Within,Without",
+          "description": "specify words to be all lowercase, separated by commas."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.73.0",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4",
+    "@vscode/test-electron": "^2.1.5"
+  }
+}
