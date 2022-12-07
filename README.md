@@ -1,7 +1,6 @@
-# smart-title-case: helper for formatting citation list.
+# smart-title-case
 
-Enabled on plaintext or markdown file, or manually, `smartTitleCase.enable` command.
-
+Helper for formatting citation list.
 
 ## Features
 
@@ -9,14 +8,24 @@ Enabled on plaintext or markdown file, or manually, `smartTitleCase.enable` comm
 
 ### `smartTitleCase.apply`
 
-+ For each word in the selected string, capitalize the first letter.
-+ All letters specified in `smartTitleCase.exception` in `setting.json` will be in lowercase.
-    + Exception: the word immediately following `.` or `:` (i.e., the beggining of sentence).
+```
+this is a pen.
+==> This is a Pen.
+```
+
++ For each word in the selected string, capitalize the first character.
++ Words specified in `smartTitleCase.exception` in `setting.json` will be in lowercase.
+    + Exception: Always capitalize the first character of the word immediately following `.` or `:` (_i.e._, the beggining of sentence).
 
 ### `smartTitleCase.capitalizeOnlyFirstChar`
 
-+ Capitalize only the first letter of the selected string and convert the rest of the words lowercase.
-+ The first letter of the word immediately following `.` or `:` (i.e., the beginning of the sentence) is always converted to uppercase.
+```
+this is a pen.
+==> This is a pen.
+```
+
++ Capitalize only the first character of the selected string and convert the rest of the words lowercase.
+    + Exception: Always capitalize the first character of the word immediately following `.` or `:` (_i.e._, the beggining of sentence).
 
 ---
 

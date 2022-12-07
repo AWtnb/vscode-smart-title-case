@@ -15,9 +15,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:plaintext",
-    "onLanguage:markdown",
-    "onCommand:smartTitleCase.enable"
+    "onCommand:smartTitleCase.apply",
+    "onCommand:smartTitleCase.capitalizeOnlyFirstChar"
   ],
   "main": "./out/extension.js",
   "contributes": {

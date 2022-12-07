@@ -2,18 +2,14 @@ import * as vscode from "vscode";
 
 import { TitleCase, capitalizeFirstChar } from "./title-case";
 
-const TITLE_CASE_EXCEPTIONS = ((): string[] => {
+const getExceptions = ((): string[] => {
   const config = vscode.workspace.getConfiguration("smartTitleCase");
-  const exc: string = config.get("exception") || "";
-  return exc.split(",").map((x) => x.trim());
-})();
-const SMART_TITLE_CASE = new TitleCase(TITLE_CASE_EXCEPTIONS);
+  const userException: string = config.get("exception") || "";
+  return userException.split(",").map((x) => x.trim());
+});
+const SMART_TITLE_CASE = new TitleCase(getExceptions());
 
-const formatSelections = (formatter: Function) => {
-  const editor = vscode.window.activeTextEditor;
-  if (!editor) {
-    return;
-  }
+const formatSelections = (editor:vscode.TextEditor, formatter: Function) => {
   editor.edit((editBuilder) => {
     editor.selections
       .filter((sel) => !sel.isEmpty)
@@ -29,18 +25,13 @@ const formatSelections = (formatter: Function) => {
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
-    vscode.commands.registerCommand("smartTitleCase.enable", () => {
-      console.log("smart-title-case was enabled!");
+    vscode.commands.registerTextEditorCommand("smartTitleCase.apply", (editor: vscode.TextEditor) => {
+      formatSelections(editor, (s: string) => SMART_TITLE_CASE.apply(s));
     })
   );
   context.subscriptions.push(
-    vscode.commands.registerCommand("smartTitleCase.apply", () => {
-      formatSelections((s: string) => SMART_TITLE_CASE.apply(s));
-    })
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand("smartTitleCase.capitalizeOnlyFirstChar", () => {
-      formatSelections(capitalizeFirstChar);
+    vscode.commands.registerTextEditorCommand("smartTitleCase.capitalizeOnlyFirstChar", (editor: vscode.TextEditor) => {
+      formatSelections(editor, capitalizeFirstChar);
     })
   );
 }
