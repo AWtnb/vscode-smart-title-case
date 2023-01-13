@@ -1,6 +1,6 @@
 {
   "name": "smart-title-case",
-  "displayName": "smart-title-case",
+  "displayName": "Smart-Title-Case",
   "description": "convert selected text to title-case (with option to specify words to lowercase)",
   "icon": "images/logo.png",
   "repository": {
