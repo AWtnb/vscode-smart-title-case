@@ -1,8 +1,7 @@
 const splitByWhiteSpace = (s: string): string[] => {
   return s
     .split(/\s/)
-    .filter((x) => x.length)
-    .map((x) => x.trim());
+    .filter((x) => x.length);
 };
 
 export class TitleCase {
@@ -26,24 +25,41 @@ export class TitleCase {
     const words = splitByWhiteSpace(s);
     return words
       .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-      .map((s, i) => {
-        if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".")) {
-          return s;
-        }
-        if (this.exceptions.includes(s)) {
-          return s.toLowerCase();
-        }
+      .map((s) => {
         if (s.indexOf("-") != -1) {
           return this.formatHyphened(s);
         }
+        return s;
+      })
+      .map((s) => {
         if (s.startsWith("'") || s.startsWith('"')) {
           return this.formatQuoted(s);
         }
         return s;
       })
+      .map((s, i) => {
+        if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".") || !this.exceptions.includes(s)) {
+          return s;
+        }
+        return s.toLowerCase();
+      })
       .join(" ")
       .replace(/\s+:\s*/g, ": ");
   }
+}
+
+const smartUpperFirst = (s:string):string => {
+  if (s.startsWith("'") || s.startsWith('"')) {
+    return s.charAt(0) + s.charAt(1).toUpperCase() + s.substring(2);
+  }
+  return s.charAt(0).toUpperCase() + s.substring(1);
+}
+
+const smartLowerFirst = (s:string):string => {
+  if (s.startsWith("'") || s.startsWith('"')) {
+    return s.charAt(0) + s.charAt(1).toLowerCase() + s.substring(2);
+  }
+  return s.charAt(0).toLowerCase() + s.substring(1); // not simply `s.toLowerCase()` because abbreviations may appear in the middle of words
 }
 
 export const capitalizeFirstChar = (s: string) => {
@@ -51,14 +67,10 @@ export const capitalizeFirstChar = (s: string) => {
   return words
     .map((s, i) => {
       if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".")) {
-        return s.charAt(0).toUpperCase() + s.substring(1);
+        return smartUpperFirst(s);
       }
-      // Abbreviations may appear in the middle of words
-      return s.charAt(0).toLowerCase() + s.substring(1);
+      return smartLowerFirst(s);
     })
     .join(" ")
-    .replace(/\s+:\s*/, ": ")
-    .replace(/["'-][A-Z]/g, (m: string) => {
-      return m.toLowerCase();
-    });
+    .replace(/\s+:\s*/g, ": ");
 };
