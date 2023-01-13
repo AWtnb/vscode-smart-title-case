@@ -4,6 +4,10 @@ const splitByWhiteSpace = (s: string): string[] => {
     .filter((x) => x.length);
 };
 
+const smartConcWords = (ss: string[]): string => {
+  return ss.join(" ").replace(/\s+:\s*/g, ": ");
+}
+
 export class TitleCase {
   readonly exceptions: string[];
   constructor(exceptions: string[]) {
@@ -23,7 +27,7 @@ export class TitleCase {
 
   apply(s: string): string {
     const words = splitByWhiteSpace(s);
-    return words
+    const fmt = words
       .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
       .map((s) => {
         if (s.indexOf("-") != -1) {
@@ -42,9 +46,8 @@ export class TitleCase {
           return s;
         }
         return s.toLowerCase();
-      })
-      .join(" ")
-      .replace(/\s+:\s*/g, ": ");
+      });
+      return smartConcWords(fmt);
   }
 }
 
@@ -64,13 +67,12 @@ const smartLowerFirst = (s:string):string => {
 
 export const capitalizeFirstChar = (s: string) => {
   const words = splitByWhiteSpace(s);
-  return words
+  const fmt = words
     .map((s, i) => {
       if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".")) {
         return smartUpperFirst(s);
       }
       return smartLowerFirst(s);
-    })
-    .join(" ")
-    .replace(/\s+:\s*/g, ": ");
+    });
+    return smartConcWords(fmt);
 };
