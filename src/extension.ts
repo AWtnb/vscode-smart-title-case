@@ -2,14 +2,14 @@ import * as vscode from "vscode";
 
 import { TitleCase, capitalizeFirstChar } from "./title-case";
 
-const getExceptions = ((): string[] => {
+const getExceptions = (): string[] => {
   const config = vscode.workspace.getConfiguration("smartTitleCase");
   const userException: string = config.get("exception") || "";
   return userException.split(",").map((x) => x.trim());
-});
+};
 const SMART_TITLE_CASE = new TitleCase(getExceptions());
 
-const formatSelections = (editor:vscode.TextEditor, formatter: Function) => {
+const formatSelections = (editor: vscode.TextEditor, formatter: Function) => {
   editor.edit((editBuilder) => {
     editor.selections
       .filter((sel) => !sel.isEmpty)
