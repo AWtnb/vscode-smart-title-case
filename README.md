@@ -25,7 +25,9 @@ this is a pen.
 ```
 
 + Capitalize only the first character of the selected string and convert the rest of the words lowercase.
-    + Exception: Always capitalize the first character of the word immediately following `.` or `:` (_i.e._, the beggining of sentence).
+    + Exceptions:
+        + Always capitalize the first character of the word immediately following `.` or `:` (_i.e._, the beggining of sentence).
+        + Consecutive capital letters are not changed (_e.g._, `DNA`).
 
 ---
 

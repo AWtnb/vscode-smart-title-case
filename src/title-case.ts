@@ -58,20 +58,26 @@ const smartUpperFirst = (s: string): string => {
   return s.charAt(0).toUpperCase() + s.substring(1);
 };
 
-const smartLowerFirst = (s: string): string => {
-  if (s.startsWith("'") || s.startsWith('"')) {
-    return s.charAt(0) + s.charAt(1).toLowerCase() + s.substring(2);
-  }
-  return s.charAt(0).toLowerCase() + s.substring(1); // not simply `s.toLowerCase()` because abbreviations may appear in the middle of words
+const smartLowerCase = (s: string): string => {
+  return s.replace(/[A-Z]+/g, (m: string): string => {
+    if (m.length > 1) {
+      return m;
+    }
+    return m.toLowerCase();
+  });
 };
 
 export const capitalizeFirstChar = (s: string) => {
   const words = splitByWhiteSpace(s);
-  const fmt = words.map((s, i) => {
-    if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".")) {
-      return smartUpperFirst(s);
-    }
-    return smartLowerFirst(s);
-  });
+  const fmt = words
+    .map((s) => {
+      return smartLowerCase(s);
+    })
+    .map((s, i) => {
+      if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".")) {
+        return smartUpperFirst(s);
+      }
+      return s;
+    });
   return smartConcWords(fmt);
 };
