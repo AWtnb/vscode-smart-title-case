@@ -27,7 +27,7 @@ export class TitleCase {
     const words = splitByWhiteSpace(s);
     const fmt = words
       .map((s) => {
-        return s.charAt(0).toUpperCase() + s.substring(1); // not `s.substring(1).toLowerCase()` because `s` may be abbreviation like "fMRI".
+        return s.charAt(0).toUpperCase() + s.substring(1); // not `s.substring(1).toLowerCase()` because `s` may be abbreviation such as "fMRI".
       })
       .map((s) => {
         if (s.indexOf("-") != -1) {
