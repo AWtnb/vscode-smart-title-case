@@ -9,13 +9,26 @@ const getExceptions = (): string[] => {
 };
 const SMART_TITLE_CASE = new TitleCase(getExceptions());
 
+const formatSelectedText = (s: string, linebreak: string, formatter: Function): string => {
+  return s
+    .split(linebreak)
+    .map((line) => {
+      const indentDepth = line.length - line.trimStart().length;
+      const indentation = line.substring(0, indentDepth);
+      const target = line.substring(indentDepth);
+      return indentation + formatter(target);
+    })
+    .join(linebreak);
+};
+
 const formatSelections = (editor: vscode.TextEditor, formatter: Function) => {
   editor.edit((editBuilder) => {
     editor.selections
       .filter((sel) => !sel.isEmpty)
       .forEach((sel) => {
         const text = editor.document.getText(sel);
-        const newText = formatter(text);
+        const linebreak = editor.document.eol == 1 ? "\n" : "\r\n";
+        const newText = formatSelectedText(text, linebreak, formatter);
         if (text != newText) {
           editBuilder.replace(sel, newText);
         }
