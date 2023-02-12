@@ -2,13 +2,6 @@ import * as vscode from "vscode";
 
 import { TitleCase, capitalizeFirstChar } from "./title-case";
 
-const getExceptions = (): string[] => {
-  const config = vscode.workspace.getConfiguration("smartTitleCase");
-  const userException: string = config.get("exception") || "";
-  return userException.split(",").map((x) => x.trim());
-};
-const SMART_TITLE_CASE = new TitleCase(getExceptions());
-
 const formatSelectedText = (s: string, linebreak: string, formatter: Function): string => {
   return s
     .split(linebreak)
@@ -37,6 +30,10 @@ const formatSelections = (editor: vscode.TextEditor, formatter: Function) => {
 };
 
 export function activate(context: vscode.ExtensionContext) {
+  const config = vscode.workspace.getConfiguration("smartTitleCase");
+  const userExceptions: string[] = (String(config.get("exception")) || "").split(",").map((x) => x.trim());
+  const SMART_TITLE_CASE = new TitleCase(userExceptions);
+
   context.subscriptions.push(
     vscode.commands.registerTextEditorCommand("smartTitleCase.apply", (editor: vscode.TextEditor) => {
       formatSelections(editor, (s: string) => SMART_TITLE_CASE.apply(s));
