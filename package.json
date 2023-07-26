@@ -7,7 +7,7 @@
     "url": "https://github.com/AWtnb/vscode-smart-title-case"
   },
   "publisher": "awtnb",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "engines": {
     "vscode": "^1.73.0"
   },
