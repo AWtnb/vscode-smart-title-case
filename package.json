@@ -28,11 +28,13 @@
     "commands": [
       {
         "command": "smartTitleCase.apply",
-        "title": "smart-title-case: apply to selection"
+        "title": "apply to selection",
+        "category": "smart-title-case"
       },
       {
         "command": "smartTitleCase.capitalizeOnlyFirstChar",
-        "title": "smart-title-case: capitalize only first character"
+        "title": "capitalize only first character",
+        "category": "smart-title-case"
       }
     ],
     "configuration": {
