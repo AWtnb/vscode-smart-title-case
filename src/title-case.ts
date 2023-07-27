@@ -6,8 +6,18 @@ const smartConcWords = (ss: string[]): string => {
   return ss.join(" ").replace(/\s+:\s*/g, ": ");
 };
 
+const isEndOfSentence = (s: string): boolean => {
+  const last = s.charAt(s.length - 1);
+  return [".", ":", "!", "?"].includes(last);
+};
+
+const startsWithQuote = (s: string): boolean => {
+  const start = s.charAt(0);
+  return ["'", '"', "\u2018", "\u201c"].includes(start);
+};
+
 export class TitleCase {
-  readonly exceptions: string[];
+  private readonly exceptions: string[];
   constructor(exceptions: string[]) {
     this.exceptions = exceptions;
   }
@@ -36,13 +46,13 @@ export class TitleCase {
         return s;
       })
       .map((s) => {
-        if (s.startsWith("'") || s.startsWith('"')) {
+        if (startsWithQuote(s)) {
           return this.formatQuoted(s);
         }
         return s;
       })
       .map((s, i) => {
-        if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".") || !this.exceptions.includes(s)) {
+        if (i == 0 || isEndOfSentence(words[i - 1]) || !this.exceptions.includes(s)) {
           return s;
         }
         return s.toLowerCase();
@@ -52,7 +62,7 @@ export class TitleCase {
 }
 
 const smartUpperFirst = (s: string): string => {
-  if (s.startsWith("'") || s.startsWith('"')) {
+  if (startsWithQuote(s)) {
     return s.charAt(0) + s.charAt(1).toUpperCase() + s.substring(2);
   }
   return s.charAt(0).toUpperCase() + s.substring(1);
@@ -74,7 +84,7 @@ export const capitalizeFirstChar = (s: string) => {
       return smartLowerCase(s);
     })
     .map((s, i) => {
-      if (i == 0 || words[i - 1].endsWith(":") || words[i - 1].endsWith(".")) {
+      if (i == 0 || isEndOfSentence(words[i - 1])) {
         return smartUpperFirst(s);
       }
       return s;
