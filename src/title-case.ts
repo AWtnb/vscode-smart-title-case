@@ -17,9 +17,11 @@ const startsWithQuote = (s: string): boolean => {
 };
 
 export class TitleCase {
-  private readonly exceptions: string[];
-  constructor(exceptions: string[]) {
-    this.exceptions = exceptions;
+  private readonly _exceptions: string[];
+  private readonly _strict: boolean;
+  constructor(exceptions: string[], strict: boolean) {
+    this._exceptions = exceptions;
+    this._strict = strict;
   }
 
   private formatHyphened(s: string): string {
@@ -33,11 +35,20 @@ export class TitleCase {
     return s.charAt(0) + this.apply(s.substring(1));
   }
 
-  apply(s: string): string {
-    const words = splitByWhiteSpace(s);
+  private toTitle(s: string): string {
+    const c = s.charAt(0).toUpperCase();
+    const rest = s.substring(1);
+    if (this._strict) {
+      return c + rest.toLowerCase();
+    }
+    return c + rest;
+  }
+
+  apply(line: string): string {
+    const words = splitByWhiteSpace(line);
     const fmt = words
       .map((s) => {
-        return s.charAt(0).toUpperCase() + s.substring(1); // not `s.substring(1).toLowerCase()` because `s` may be abbreviation such as "fMRI".
+        return this.toTitle(s);
       })
       .map((s) => {
         if (s.indexOf("-") != -1) {
@@ -52,7 +63,7 @@ export class TitleCase {
         return s;
       })
       .map((s, i) => {
-        if (i == 0 || isEndOfSentence(words[i - 1]) || !this.exceptions.includes(s)) {
+        if (i == 0 || isEndOfSentence(words[i - 1]) || !this._exceptions.includes(s)) {
           return s;
         }
         return s.toLowerCase();
@@ -77,10 +88,13 @@ const smartLowerCase = (s: string): string => {
   });
 };
 
-export const capitalizeFirstChar = (s: string) => {
+export const capitalizeFirstChar = (s: string, strict: boolean) => {
   const words = splitByWhiteSpace(s);
   const fmt = words
     .map((s) => {
+      if (strict) {
+        return s.toLowerCase();
+      }
       return smartLowerCase(s);
     })
     .map((s, i) => {

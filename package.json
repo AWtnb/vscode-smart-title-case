@@ -32,8 +32,18 @@
         "category": "smart-title-case"
       },
       {
+        "command": "smartTitleCase.apply-strictly",
+        "title": "apply to selection (strictly)",
+        "category": "smart-title-case"
+      },
+      {
         "command": "smartTitleCase.capitalizeOnlyFirstChar",
         "title": "capitalize only first character",
+        "category": "smart-title-case"
+      },
+      {
+        "command": "smartTitleCase.capitalizeOnlyFirstChar-strictly",
+        "title": "capitalize only first character (strictly)",
         "category": "smart-title-case"
       }
     ],
