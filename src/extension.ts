@@ -27,14 +27,17 @@ class SelectionsFormatter {
 
   apply() {
     const workspaceEdit = new vscode.WorkspaceEdit();
-    this._editor.selections
+    const sels = this._editor.selections;
+    sels
       .filter((sel) => !sel.isEmpty)
       .forEach((sel) => {
         const text = this._editor.document.getText(sel);
         const newText = this.onText(text);
         workspaceEdit.replace(this._editor.document.uri, sel, newText);
       });
-    vscode.workspace.applyEdit(workspaceEdit);
+    vscode.workspace.applyEdit(workspaceEdit).then(() => {
+      this._editor.selections = sels;
+    });
   }
 }
 
